@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+	--color-ink: #0e0d16;
+	--color-ink-soft: #17151f;
+	--color-cream: #f3ede3;
+	--color-amber: #d9a35b;
+	--color-amber-hover: #e4b473;
+	--color-rose: #c98a86;
+	--font-family-display: "Fraunces Variable", serif;
+	--font-family-sans: "Inter Variable", sans-serif;
+	--radius-2xl: 1rem;
+	--radius-xl: 0.75rem;
+	--radius-lg: 0.5rem;
+}
+
+@layer base {
+	html,
+	body {
+		background-color: var(--color-ink);
+		color: var(--color-cream);
+		font-family: var(--font-family-sans);
+	}
+}
+
+@layer utilities {
+	.grain {
+		position: relative;
+	}
+	.grain::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		opacity: 0.06;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+	}
+
+	.vignette-viewer {
+		position: relative;
+	}
+	.vignette-viewer::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.55) 100%);
+	}
+
+	.vignette-landing {
+		position: relative;
+	}
+	.vignette-landing::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.5) 100%);
+	}
+}
