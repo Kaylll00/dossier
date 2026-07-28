@@ -1,19 +1,15 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { client } from '$lib/appwrite';
+	import '@fontsource-variable/fraunces';
+	import '@fontsource-variable/inter';
+	import '../app.css';
 	import favicon from '$lib/assets/favicon.svg';
 
 	let { children } = $props();
-
-	onMount(() => {
-		client.ping().catch((error) => {
-			console.error('Appwrite ping failed', error);
-		});
-	});
 </script>
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+	<title>The Impossible Room</title>
 </svelte:head>
 
 {@render children()}
