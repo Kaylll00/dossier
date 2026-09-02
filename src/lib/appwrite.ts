@@ -8,3 +8,15 @@ export const client = new Client()
 export const account = new Account(client);
 export const databases = new Databases(client);
 export const storage = new Storage(client);
+
+export async function ensureSession() {
+	try {
+		await account.get();
+	} catch {
+		try {
+			await account.createAnonymousSession();
+		} catch (e) {
+			console.warn('Could not create anonymous session:', e);
+		}
+	}
+}

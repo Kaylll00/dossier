@@ -13,6 +13,7 @@
 	let showCreateModal = $state(false);
 	let newRoomName = $state('');
 	let creating = $state(false);
+	let errorMessage = $state('');
 
 	onMount(async () => {
 		await loadRooms();
@@ -43,11 +44,13 @@
 	async function handleCreate() {
 		if (!newRoomName.trim()) return;
 		creating = true;
+		errorMessage = '';
 		try {
 			const room = await createRoom(newRoomName.trim(), 'dusk');
 			window.location.href = `/builder/${room.$id}`;
-		} catch (e) {
+		} catch (e: any) {
 			console.error('Failed to create room', e);
+			errorMessage = e?.message || e?.response?.message || 'Failed to create room. Please check Appwrite permissions & console.';
 			creating = false;
 		}
 	}
@@ -55,6 +58,7 @@
 	function closeModal() {
 		showCreateModal = false;
 		newRoomName = '';
+		errorMessage = '';
 	}
 </script>
 
@@ -136,6 +140,9 @@
 					bind:value={newRoomName}
 					class="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/10 text-cream font-sans text-sm outline-none focus:border-amber/60 transition-colors"
 				/>
+				{#if errorMessage}
+					<p class="text-rose text-xs mt-2.5 font-sans leading-relaxed bg-rose/10 p-2.5 rounded-lg border border-rose/20">{errorMessage}</p>
+				{/if}
 				<div class="flex justify-end gap-3 mt-6">
 					<Button variant="secondary" onclick={closeModal}>Cancel</Button>
 					<Button
